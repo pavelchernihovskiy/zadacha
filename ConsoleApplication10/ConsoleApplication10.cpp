@@ -1,21 +1,60 @@
-﻿// ConsoleApplication10.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
-
+﻿
 #include "pch.h"
 #include <iostream>
+#include <queue>
+using namespace std;
 
-int main()
+int row[4] = { 1, -1, 0, 0 };
+int col[4] = { 0, 0, 1, -1 };
+int n, m, counter = 0;
+bool matrix[100][100];
+
+bool check(int i, int j) { return ((0 <= i) && (i < n) && (0 <= j) && (j < m)); }
+
+void FindNeighbours(int start_i, int start_j)
 {
-    std::cout << "Hello World!\n"; 
+	queue <int> queue_i, queue_j;
+	queue_i.push(start_i);
+	queue_j.push(start_j);
+	int i, j;
+
+	while (!queue_i.empty()) 
+	{
+		i = queue_i.front();
+		j = queue_j.front();
+		matrix[i][j] = 1;
+		for (int k = 0; i < 4; i++)
+			if (check(i + col[k], j + row[k]) && !(matrix[i + col[k]][j + row[k]])) 
+			{
+				queue_i.push(i + col[k]);
+				queue_j.push(j + row[k]);
+			}
+		queue_i.pop();
+		queue_j.pop();
+	}
 }
 
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
+int main() {
+	cin >> n >> m;
 
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
+	char ch;
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < m; j++)
+		{
+			cin >> ch;
+			matrix[i][j] = ch == '.';
+		}
+
+
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < m; j++)
+			if (!matrix[i][j]) 
+			{
+				counter++;
+				FindNeighbours(i, j);
+			}
+
+	cout << counter;
+
+	return 0;
+}
