@@ -23,7 +23,7 @@ void FindNeighbours(int start_i, int start_j)
 		i = queue_i.front();
 		j = queue_j.front();
 		matrix[i][j] = 1;
-		for (int k = 0; i < 4; i++)
+		for (int k = 0; k < 4; k++)
 			if (check(i + col[k], j + row[k]) && !(matrix[i + col[k]][j + row[k]])) 
 			{
 				queue_i.push(i + col[k]);
