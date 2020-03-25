@@ -1,5 +1,5 @@
 # zadacha
-reshenie zadaniya
+reshenie zadaniya 3
 Описание задания №3.
 
 Граф задается матрицей смежности bool matrix[100][100];  .
